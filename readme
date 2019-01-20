@@ -1,0 +1,80 @@
+ sqid v0.3  -- SQL Injection Digger.
+
+ Copyright (C) Metaeye Security Group 
+               http://www.metaeye.org/ 
+
+SQL injection digger is a command line program that looks for SQL injections and common errors in web sites.
+Current version can perform the following operations:
+
+    * Look for SQL injections and common errors in web site URLs found by performing a google search.
+    * Look for SQL injections and common errors in a given URL or a file with URLs.
+    * Look for SQL injections and common errors in links from a web page.
+    * Crawl a web site/web page and do the above.
+
+Also supports
+
+    * Load multiple triggers from file.
+    * Load multiple signature databases from files.
+    * HTTPS support.
+    * HTTP proxy support with authentication.
+    * Basic authentication.
+    * Specify user agent.
+    * Specify referer.
+    * HTTP Cookies loading from command line or a file.
+
+sqid is extensible by adding more signatures to its database (sqid.db). The signatures simply use
+regular expressions.
+
+Usage
+
+Usage: sqid.rb [options]
+
+ options:
+    -m, --mode MODE                  Operate in mode MODE.
+                                     MODE is one of
+                                       g,google  Operate in google search mode.
+                                       u,url     Check this url or a file with urls.
+                                       p,page    Check single page.
+                                       c,crawl   Crawl website and check.
+
+Google search mode options:
+    -q, --query QUERY                QUERY to perforn google search for.
+    -s, --start START                zero-based index of the first desired result,
+                                     zero if not specified.
+    -r, --results RESULTS            number of results desired, default is 20 if not specfied.
+                                     rounded to tens.
+
+URL check mode options:
+    -u, --url URL                    check this URL.
+                                     If URL is a file urls will be loaded from this file, specify each url on a new line.
+
+Page check mode options:
+    -p, --page PAGE                  Check this page.
+
+Crawl mode options:
+    -c, --crawl WEBSITE              Crawl website WEBSITE and check.
+                                     specfify as http[s]://WESITE:[PORT], default PORT is 80
+
+URL, Page and Crawl mode common options:
+    -C, --cookie COOKIE              Cookie in the HTTP header specify as name=value,name=value.
+                                     If COOKIE is a file cookies will be loaded from this file, specify each cookie on a new line.
+    -a, --accept-cookies             Accept cookies from the webite or page. Default is no.
+    -R, --referer REFERER            Set referer in the HTTP header.
+    -B, --auth CREDENTIALS           Use crendtials as basic auth for the website.
+                                     specfify as user:password.
+
+Common options:
+    -o, --with-noquery               Match page content without query parameters. Default is false.
+    -D, --db-files FILE,...,FILE     Use file(s) FILE,...,FILE as signature database.
+    -t, --trigger TRIGGER            Use TRIGGER for detecting SQL injections/errors default is '.
+                                     If TRIGGER is a file triggers will be loaded from it. specify each trigger on newline.
+                                     Lines starting with a # are ignored.
+    -T, --time-out TIMEOUT           Timeout for response in seconds.
+                                     Default is 10 seconds.
+    -U, --user-agent USERAGENT       User Agent in the HTTP Header.
+    -P, --proxy PROXY                User HTTP proxy PROXY for operations.
+                                     specfify as proxy:port.
+    -A, --proxy-auth CREDENTIALS     Use crendtials CRENDENTIALS for the proxy.
+                                     specfify as user:password.
+    -v, --verbose                    Run verbosely.
+    -h, --help                       Show this message
